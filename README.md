@@ -253,6 +253,8 @@ func main() {
 }
 
 ```
+- receiver, struct
+
 ```go
 // accounts/accounts.go
 // method
@@ -271,6 +273,57 @@ func (a Account) Balance() int {
 
 ```
 #### 2.2 Methods part Two
+
+- Fatalln : print errors and kill the program
+
+```go
+// main.go
+
+package main
+
+import (
+	"fmt"
+	"log"
+
+	"github.com/maphnew/learngo/accounts"
+)
+
+func main() {
+	account := accounts.NewAccount("Maphnew")
+	account.Deposit(10)
+	fmt.Println(account.Balance())
+	err := account.Withdraw(20)
+	if err != nil {
+		// log.Fatalln(err)
+		fmt.Println(err)
+	}
+	fmt.Println(account.Balance())
+}
+
+```
+- return errors or nill
+- no exception handling
+- pointer
+
+```go
+import (
+	"errors"
+	"fmt"
+)
+
+var errNoMoney = errors.New("Can't withdraw")
+
+// Withdraw x amount from your balance
+func (a *Account) Withdraw(amount int) error {
+	if a.balance < amount {
+		return errNoMoney
+	}
+	a.balance -= amount
+	return nil
+}
+
+```
+
 #### 2.3 Finishing Up
 #### 2.4 Dictionary part One
 #### 2.5 Add Method
