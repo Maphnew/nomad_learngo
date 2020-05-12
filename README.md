@@ -376,8 +376,129 @@ func main() {
 
 ```
 #### 2.4 Dictionary part One
+- type
+- map
+```go
+// mydict/mydict.go
+
+package mydict
+
+import "errors"
+
+// Dictionary type
+type Dictionary map[string]string
+
+var errNotFound = errors.New("Not Found")
+
+// Search for a word
+func (d Dictionary) Search(word string) (string, error) {
+	value, exists := d[word]
+	if exists {
+		return value, nil
+	}
+	return "", errNotFound
+}
+```
+
+```go
+// main.go
+
+package main
+
+import (
+	"fmt"
+
+	"github.com/maphnew/learngo/mydict"
+)
+
+func main() {
+	dictionary := mydict.Dictionary{"first": "First word"}
+	definition, err := dictionary.Search("second")
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(definition)
+	}
+}
+```
 #### 2.5 Add Method
+- Add()
+```go
+// main.go
+
+package main
+
+import (
+	"fmt"
+
+	"github.com/maphnew/learngo/mydict"
+)
+
+func main() {
+	dictionary := mydict.Dictionary{}
+	word := "hello"
+	definition := "Greeting"
+	err := dictionary.Add(word, definition)
+	if err != nil {
+		fmt.Println("err:", err)
+	}
+
+	hello, _ := dictionary.Search("hello")
+	fmt.Println("found:", word, "definition:", hello)
+
+	err2 := dictionary.Add(word, definition)
+	if err2 != nil {
+		fmt.Println("err2:", err2)
+	}
+}
+```
+
+
+```go
+// mydict/mydict.go
+
+package mydict
+
+import "errors"
+
+// Dictionary type
+type Dictionary map[string]string
+
+var errNotFound = errors.New("Not Found")
+var errWordExists = errors.New("That word already exist")
+
+// Search for a word
+func (d Dictionary) Search(word string) (string, error) {
+	value, exists := d[word]
+	if exists {
+		return value, nil
+	}
+	return "", errNotFound
+}
+
+// Add a word to the dictionary
+func (d Dictionary) Add(word, def string) error {
+	_, err := d.Search(word)
+	switch err {
+	case errNotFound:
+		d[word] = def
+	case nil:
+		return errWordExists
+	}
+	return nil
+}
+```
+
 #### 2.6 Update Delete
+```go
+// main.go
+```
+
+
+```go
+// mydict/mydict.go
+```
+
 
 ### 3 URL Checker & Go Routines
  
