@@ -325,6 +325,56 @@ func (a *Account) Withdraw(amount int) error {
 ```
 
 #### 2.3 Finishing Up
+- Struct Method - String()
+- Original:
+```
+&{Maphnew 10}
+```
+- Changed:
+```
+Maphnew's account.
+Has: 10
+```
+- Pointer vs Copy
+```
+(a *Account) vs (a Account)
+```
+```go
+// accounts.go
+
+// ChangeOwner of the account
+func (a *Account) ChangeOwner(newOwner string) {
+	a.owner = newOwner
+}
+
+// Owner of the account
+func (a Account) Owner() string {
+	return a.owner
+}
+
+// String of the Account
+func (a Account) String() string {
+	return fmt.Sprint(a.Owner(), "'s account. \nHas: ", a.Balance())
+}
+
+```
+
+```go
+// main.go
+
+func main() {
+	account := accounts.NewAccount("Maphnew")
+	account.Deposit(10)
+	// err := account.Withdraw(20)
+	// if err != nil {
+	// 	// log.Fatalln(err)
+	// 	fmt.Println(err)
+	// }
+	// fmt.Println(account.Balance(), account.Owner())
+	fmt.Println(account)
+}
+
+```
 #### 2.4 Dictionary part One
 #### 2.5 Add Method
 #### 2.6 Update Delete
